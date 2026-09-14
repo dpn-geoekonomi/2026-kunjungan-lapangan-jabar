@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Peta Lokasi KKDN Jawa Barat</title>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha384-sHL9NAb7lN7rfvG5lfHpm643Xkcjzp4jFvuavGOndn6pjVqS6ny56CAt3nsEVT4H" crossorigin="anonymous">
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha384-cxOPjt7s7Iz04uaHJceBmS+qpjv2JkIHNVcuOrM+YHwZOmJGBXI00mdUXEq65HTH" crossorigin="anonymous"></script>
+<style>
+  html, body { margin: 0; padding: 0; height: 100%; font-family: 'Archivo', Arial, sans-serif; }
+  #map { width: 100%; height: 100%; background: #f3f2f2; }
+  .leaflet-popup-content { font-family: Arial, sans-serif; font-size: 13px; line-height: 1.4; }
+  .leaflet-popup-content b { display: block; font-size: 13px; margin-bottom: 2px; }
+  .leaflet-popup-content .day { display: inline-block; margin-top: 4px; font-size: 10px; letter-spacing: 0.06em; text-transform: uppercase; color: #ec3013; font-weight: 700; }
+</style>
+</head>
+<body>
+<div id="map"></div>
+<script>
+  var stops = [
+    { name: "PT Tesco Indomaritim (Shipyard)", desc: "Audiensi &amp; peninjauan galangan kapal — Ds. Muara Bakti, Babelan, Bekasi", day: "HARI 1 · RABU 16 SEP", lat: -6.0951, lng: 107.0206, color: "#2f7d4f" },
+    { name: "PT Contemporary Amperex Technology Indonesia Battery (CATIB)", desc: "Audiensi &amp; peninjauan pabrik sel baterai EV — Kawasan Artha Industrial Hill, Karawang", day: "HARI 2 · KAMIS 17 SEP", lat: -6.3480, lng: 107.3490, color: "#ec3013" },
+    { name: "PT VinFast Automobile Indonesia (Plant)", desc: "Audiensi &amp; peninjauan pabrik kendaraan listrik — Subang", day: "HARI 2 · KAMIS 17 SEP", lat: -6.4740, lng: 107.7920, color: "#ec3013" },
+    { name: "Perumahan Bumi Rudawi", desc: "Peninjauan perumahan — Subang", day: "HARI 2 · KAMIS 17 SEP", lat: -6.5710, lng: 107.7620, color: "#ec3013" }
+  ];
+
+  var map = L.map('map', { scrollWheelZoom: false });
+  L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; OpenStreetMap contributors',
+    maxZoom: 18
+  }).addTo(map);
+
+  var latlngs = [];
+  stops.forEach(function (s) {
+    var marker = L.circleMarker([s.lat, s.lng], {
+      radius: 9,
+      color: '#201e1d',
+      weight: 2,
+      fillColor: s.color,
+      fillOpacity: 1
+    }).addTo(map);
+    marker.bindPopup('<b>' + s.name + '</b>' + s.desc + '<span class="day">' + s.day + '</span>');
+    latlngs.push([s.lat, s.lng]);
+  });
+
+  L.polyline(latlngs, { color: '#201e1d', weight: 2, dashArray: '2 8', opacity: 0.6 }).addTo(map);
+  map.fitBounds(latlngs, { padding: [40, 40] });
+</script>
+</body>
+</html>
